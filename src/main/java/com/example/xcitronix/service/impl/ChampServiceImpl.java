@@ -4,6 +4,7 @@ import com.example.xcitronix.DTOs.ChampDTO;
 import com.example.xcitronix.Entity.Champ;
 import com.example.xcitronix.Entity.Ferme;
 import com.example.xcitronix.VM.ChampVM;
+import com.example.xcitronix.exciption.SuperficierException;
 import com.example.xcitronix.mapper.ChampMapper;
 import com.example.xcitronix.repository.ChampRepository;
 import com.example.xcitronix.repository.FermeRepository;
@@ -30,6 +31,15 @@ public class ChampServiceImpl implements ChampService {
     public ChampVM addChampToFerme(ChampDTO champDTO) {
         Ferme ferme = fermeRepository.findById(champDTO.getFermeId())
                 .orElseThrow(() -> new RuntimeException("Ferme introuvable."));
+
+        double totalSuperf = champRepository.findByFermeId(champDTO.getFermeId())
+                .stream()
+                .mapToDouble(Champ::getSuperficie)
+                .sum();
+
+        if(totalSuperf + champDTO.getSuperficie() > ferme.getSuperficie()){
+            throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
+        }
 
         Champ champ = champMapper.toEntity(champDTO);
         champ.setFerme(ferme);
