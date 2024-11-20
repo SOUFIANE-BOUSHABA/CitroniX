@@ -27,6 +27,7 @@ public class Vente {
 
     private String client;
 
+
     @ManyToOne
     @JoinColumn(name = "recolte_id", nullable = false)
     private Recolte recolte;
