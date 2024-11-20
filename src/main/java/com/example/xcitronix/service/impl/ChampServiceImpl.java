@@ -41,6 +41,7 @@ public class ChampServiceImpl implements ChampService {
             throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
         }
 
+
         Champ champ = champMapper.toEntity(champDTO);
         champ.setFerme(ferme);
         champ = champRepository.save(champ);
