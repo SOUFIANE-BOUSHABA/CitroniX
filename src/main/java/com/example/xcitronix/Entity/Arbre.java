@@ -1,6 +1,7 @@
 package com.example.xcitronix.Entity;
 
 
+import com.example.xcitronix.exciption.ArbreException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,6 +36,9 @@ public class Arbre {
 
     public double getProductivite() {
         int age = getAge();
+        if (age > 20) {
+            throw new ArbreException("L'arbre > l age 20 ans.");
+        }
         if (age < 3) {
             return 2.5;
         } else if (age >= 3 && age <= 10) {
