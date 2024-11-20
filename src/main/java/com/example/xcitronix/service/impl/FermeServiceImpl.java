@@ -62,4 +62,13 @@ public class FermeServiceImpl implements FermeService {
                 .map(fermeMapper::toViewModel)
                 .collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<FermeVM> searchFermes(String nom, String localisation, Double superficie) {
+        return fermeRepository.findByCriteria(nom, localisation, superficie)
+                .stream()
+                .map(fermeMapper::toViewModel)
+                .collect(Collectors.toList());
+    }
 }

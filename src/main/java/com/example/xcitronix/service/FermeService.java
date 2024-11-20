@@ -11,4 +11,6 @@ public interface FermeService {
     void deleteFerme(Long id);
     FermeVM getFermeById(Long id);
     List<FermeVM> getAllFermes();
+    List<FermeVM> searchFermes(String nom, String localisation, Double superficie);
+
 }

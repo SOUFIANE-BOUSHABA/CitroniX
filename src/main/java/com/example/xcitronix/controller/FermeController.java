@@ -45,4 +45,13 @@ public class FermeController {
     public ResponseEntity<List<FermeVM>> getAllFermes() {
         return ResponseEntity.ok(fermeService.getAllFermes());
     }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FermeVM>> searchFermes(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String localisation,
+            @RequestParam(required = false) Double superficie) {
+        return ResponseEntity.ok(fermeService.searchFermes(nom, localisation, superficie));
+    }
 }
