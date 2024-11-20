@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Getter
@@ -20,9 +21,26 @@ public class Arbre {
 
     private LocalDate datePlantation;
 
-    private int age;
 
     @ManyToOne
     @JoinColumn(name = "champ_id", nullable = false)
     private Champ champ;
+
+    public int getAge() {
+        if (datePlantation != null) {
+            return Period.between(datePlantation, LocalDate.now()).getYears();
+        }
+        return 0;
+    }
+
+    public double getProductivite() {
+        int age = getAge();
+        if (age < 3) {
+            return 2.5;
+        } else if (age >= 3 && age <= 10) {
+            return 12;
+        } else {
+            return 20;
+        }
+    }
 }
