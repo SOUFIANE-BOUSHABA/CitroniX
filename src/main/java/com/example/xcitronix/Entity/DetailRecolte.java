@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "detail_recolte")
 public class DetailRecolte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

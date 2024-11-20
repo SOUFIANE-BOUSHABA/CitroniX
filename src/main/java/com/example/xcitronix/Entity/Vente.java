@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "vente")
 public class Vente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

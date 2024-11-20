@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "arbre")
 public class Arbre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "champ")
 public class Champ {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
