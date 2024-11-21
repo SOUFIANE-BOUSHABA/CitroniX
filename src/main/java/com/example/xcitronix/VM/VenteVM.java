@@ -1,24 +1,26 @@
-package com.example.xcitronix.DTOs;
+package com.example.xcitronix.VM;
 
-import java.time.LocalDate;
-
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
+
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VenteDTO {
+public class VenteVM {
     private Long id;
     private LocalDate date;
     private double prixUnitaire;
-
-    @Min(value = 1, message = " at least 1")
     private double quantite;
     private String client;
     private Long recolteId;
 }
+
+
+
