@@ -45,7 +45,7 @@ public class ChampServiceImpl implements ChampService {
                     }
 
                     long champcount = champRepository.countByFermeId(champDTO.getFermeId());
-                    if(champcount > 10){
+                    if(champcount >= 10){
                         throw new SuperficierException("Le nombre maximum de champs est atteint.");
                     }
 
