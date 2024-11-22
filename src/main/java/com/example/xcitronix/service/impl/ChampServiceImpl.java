@@ -29,23 +29,37 @@ public class ChampServiceImpl implements ChampService {
 
     @Override
     public ChampVM addChampToFerme(ChampDTO champDTO) {
-        Ferme ferme = fermeRepository.findById(champDTO.getFermeId())
-                .orElseThrow(() -> new RuntimeException("Ferme introuvable."));
 
-        double totalSuperf = champRepository.findByFermeId(champDTO.getFermeId())
-                .stream()
-                .mapToDouble(Champ::getSuperficie)
-                .sum();
 
-        if(totalSuperf + champDTO.getSuperficie() > ferme.getSuperficie()){
-            throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
-        }
+                    Ferme ferme = fermeRepository.findById(champDTO.getFermeId())
+                            .orElseThrow(() -> new RuntimeException("Ferme introuvable."));
 
-        Champ champ = champMapper.toEntity(champDTO);
-        champ.setFerme(ferme);
-        champ = champRepository.save(champ);
-        return champMapper.toViewModel(champ);
+                    double totalSuperf = champRepository.findByFermeId(champDTO.getFermeId())
+                            .stream()
+                            .mapToDouble(Champ::getSuperficie)
+                            .sum();
+
+                    if (champDTO.getSuperficie() < 0.1){
+                        throw new SuperficierException(" ou min  champ est de 0.1 hectare (1 000 m)");
+                    }
+
+                    long champcount = champRepository.countByFermeId(champDTO.getFermeId());
+                    if(champcount > 10){
+                        throw new SuperficierException("Le nombre maximum de champs est atteint.");
+                    }
+
+                    if(totalSuperf + champDTO.getSuperficie() > ferme.getSuperficie()){
+                        throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
+                    }
+
+
+                    Champ champ = champMapper.toEntity(champDTO);
+                    champ.setFerme(ferme);
+                    champ = champRepository.save(champ);
+                    return champMapper.toViewModel(champ);
     }
+
+
 
     @Override
     public ChampVM getChampById(Long id) {

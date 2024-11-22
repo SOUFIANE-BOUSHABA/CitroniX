@@ -10,4 +10,5 @@ import java.util.List;
 public interface ChampRepository extends JpaRepository<Champ, Long> {
 
     List<Champ> findByFermeId(Long fermeId);
+    long countByFermeId(Long fermeId);
 }

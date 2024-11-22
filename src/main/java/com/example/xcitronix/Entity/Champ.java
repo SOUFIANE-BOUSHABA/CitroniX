@@ -27,6 +27,4 @@ public class Champ {
     @OneToMany(mappedBy = "champ", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Arbre> arbres;
 
-    @OneToMany(mappedBy = "champ", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recolte> recoltes;
 }
