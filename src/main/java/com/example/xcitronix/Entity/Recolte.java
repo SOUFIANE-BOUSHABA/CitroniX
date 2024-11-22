@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,10 +28,10 @@ public class Recolte {
 
     private double quantiteTotale;
 
-    @ManyToOne
-    @JoinColumn(name = "champ_id", nullable = false)
-    private Champ champ;
 
     @OneToMany(mappedBy = "recolte", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailRecolte> detailsRecolte;
+
+    @OneToMany(mappedBy = "recolte", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vente> ventes;
 }

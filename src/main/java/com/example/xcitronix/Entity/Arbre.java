@@ -34,9 +34,16 @@ public class Arbre {
         return 0;
     }
 
+
+
+
+
     public double getProductivite() {
+
+
         int age = getAge();
         if (age > 20) {
+
             throw new ArbreException("L'arbre > l age 20 ans.");
         }
         if (age < 3) {
