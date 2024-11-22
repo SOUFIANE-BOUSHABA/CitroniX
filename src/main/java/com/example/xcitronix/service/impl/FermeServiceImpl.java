@@ -24,6 +24,10 @@ public class FermeServiceImpl implements FermeService {
 
     @Override
     public FermeVM createFerme(FermeDTO dto) {
+        boolean uniqueNom = fermeRepository.existsByNom(dto.getNom());
+        if (uniqueNom) {
+            throw new RuntimeException("Nom de ferme déjà existant.");
+        }
         Ferme ferme = fermeMapper.toEntity(dto);
         ferme = fermeRepository.save(ferme);
         return fermeMapper.toViewModel(ferme);

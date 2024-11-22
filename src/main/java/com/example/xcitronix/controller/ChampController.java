@@ -3,6 +3,7 @@ package com.example.xcitronix.controller;
 import com.example.xcitronix.DTOs.ChampDTO;
 import com.example.xcitronix.VM.ChampVM;
 import com.example.xcitronix.service.ChampService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ChampController {
     }
 
     @PostMapping
-    public ResponseEntity<ChampVM> addChampToFerme(@RequestBody ChampDTO champDTO) {
+    public ResponseEntity<ChampVM> addChampToFerme(@Valid @RequestBody ChampDTO champDTO) {
         return ResponseEntity.ok(champService.addChampToFerme(champDTO));
     }
 
@@ -34,7 +35,7 @@ public class ChampController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChampVM> updateChamp(@PathVariable Long id, @RequestBody ChampDTO champDTO) {
+    public ResponseEntity<ChampVM> updateChamp(@Valid @PathVariable Long id, @RequestBody ChampDTO champDTO) {
         return ResponseEntity.ok(champService.updateChamp(id, champDTO));
     }
 

@@ -4,6 +4,7 @@ package com.example.xcitronix.controller;
 import com.example.xcitronix.DTOs.ArbreDTO;
 import com.example.xcitronix.VM.ArbreVM;
 import com.example.xcitronix.service.ArbreService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class ArbreController {
     }
 
     @PostMapping
-    public ResponseEntity<ArbreVM> plantArbre(@RequestBody ArbreDTO arbreDTO) {
+    public ResponseEntity<ArbreVM> plantArbre(@Valid @RequestBody ArbreDTO arbreDTO) {
         return ResponseEntity.ok(arbreService.plantArbre(arbreDTO));
     }
 
@@ -35,7 +36,7 @@ public class ArbreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArbreVM> updateArbre(@PathVariable Long id, @RequestBody ArbreDTO arbreDTO) {
+    public ResponseEntity<ArbreVM> updateArbre( @Valid @PathVariable Long id, @RequestBody ArbreDTO arbreDTO) {
         return ResponseEntity.ok(arbreService.updateArbre(id, arbreDTO));
     }
 
