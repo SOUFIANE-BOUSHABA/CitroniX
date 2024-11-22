@@ -6,7 +6,7 @@ import com.example.xcitronix.VM.RecolteVM;
 import java.util.List;
 
 public interface RecolteService {
-    RecolteVM addRecolte(RecolteDTO recolteDTO);
+    RecolteVM addRecolte(Long champId, RecolteDTO recolteDTO);
 
     List<RecolteVM> getAllRecoltes();
 

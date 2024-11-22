@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DetailRecolteDTO {
 
-    private double quantite;
     private Recolte recolte;
     private Arbre arbre;
 

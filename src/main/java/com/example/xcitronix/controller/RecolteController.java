@@ -19,8 +19,8 @@ public class RecolteController {
     }
 
     @PostMapping
-    public ResponseEntity<RecolteVM> addRecolte(@RequestBody RecolteDTO recolteDTO) {
-        return ResponseEntity.ok(recolteService.addRecolte(recolteDTO));
+    public ResponseEntity<RecolteVM> addRecolte(@RequestParam(required = false) Long champId, @RequestBody RecolteDTO recolteDTO) {
+        return ResponseEntity.ok(recolteService.addRecolte(champId, recolteDTO));
     }
 
     @GetMapping
