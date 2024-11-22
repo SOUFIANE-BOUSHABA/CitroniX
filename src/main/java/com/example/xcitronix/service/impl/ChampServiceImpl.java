@@ -4,6 +4,7 @@ import com.example.xcitronix.DTOs.ChampDTO;
 import com.example.xcitronix.Entity.Champ;
 import com.example.xcitronix.Entity.Ferme;
 import com.example.xcitronix.VM.ChampVM;
+import com.example.xcitronix.exciption.ChampException;
 import com.example.xcitronix.exciption.SuperficierException;
 import com.example.xcitronix.mapper.ChampMapper;
 import com.example.xcitronix.repository.ChampRepository;
@@ -48,8 +49,14 @@ public class ChampServiceImpl implements ChampService {
                         throw new SuperficierException("Le nombre maximum de champs est atteint.");
                     }
 
+
+
                     if(totalSuperf + champDTO.getSuperficie() > ferme.getSuperficie()){
                         throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
+                    }
+
+                    if(champDTO.getSuperficie() > ferme.getSuperficie() * 0.5){
+                        throw new SuperficierException("Superficie du champ dépasse 50% de la superficie de la ferme.");
                     }
 
 
@@ -64,7 +71,7 @@ public class ChampServiceImpl implements ChampService {
     @Override
     public ChampVM getChampById(Long id) {
         Champ champ = champRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Champ introuvable."));
+                .orElseThrow(() -> new ChampException("Champ introuvable."));
         return champMapper.toViewModel(champ);
     }
 
@@ -79,7 +86,37 @@ public class ChampServiceImpl implements ChampService {
     @Override
     public ChampVM updateChamp(Long id, ChampDTO champDTO) {
         Champ champ = champRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Champ introuvable."));
+                .orElseThrow(() -> new ChampException("Champ introuvable."));
+
+        Ferme ferme = fermeRepository.findById(champDTO.getFermeId())
+                .orElseThrow(() -> new RuntimeException("Ferme introuvable."));
+
+        double totalSuperf = champRepository.findByFermeId(champDTO.getFermeId())
+                .stream()
+                .mapToDouble(Champ::getSuperficie)
+                .sum();
+
+        if (champDTO.getSuperficie() < 0.1){
+            throw new SuperficierException(" ou min  champ est de 0.1 hectare (1 000 m)");
+        }
+
+        long champcount = champRepository.countByFermeId(champDTO.getFermeId());
+        if(champcount > 10){
+            throw new SuperficierException("Le nombre maximum de champs est atteint.");
+        }
+
+
+
+        if(totalSuperf + champDTO.getSuperficie() > ferme.getSuperficie()){
+            throw new SuperficierException("Superficie totale des champs dépasse la superficie de la ferme.");
+        }
+
+        if(champDTO.getSuperficie() > ferme.getSuperficie() * 0.5){
+            throw new SuperficierException("Superficie du champ dépasse 50% de la superficie de la ferme.");
+        }
+
+
+
         champ.setSuperficie(champDTO.getSuperficie());
         champ = champRepository.save(champ);
         return champMapper.toViewModel(champ);
@@ -88,7 +125,7 @@ public class ChampServiceImpl implements ChampService {
     @Override
     public void deleteChamp(Long id) {
         Champ champ = champRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Champ introuvable."));
+                .orElseThrow(() -> new ChampException("Champ introuvable."));
         champRepository.delete(champ);
     }
 }

@@ -36,8 +36,9 @@ public class ArbreServiceImpl implements ArbreService {
 
 
         LocalDate datePlantation = arbreDTO.getDatePlantation();
-        if(datePlantation.getMonthValue()< 3  || datePlantation.getMonthValue() > 5){
-            throw new ArbreException("La date de plantation doit être entre mars et mai.");
+        int monthValue = datePlantation.getMonthValue();
+        if (monthValue >= 3 && monthValue <= 5) {
+            throw new ArbreException("La date de plantation ne doit pas être entre mars et mai.");
         }
 
         long arbrecount = arbreRepository.countArbresByChampId(champ.getId());
