@@ -41,6 +41,10 @@ public class VenteServiceImpl  implements VenteService {
                 .mapToDouble(Vente::getQuantite)
                 .sum();
 
+        if(venteDTO.getDate().isBefore(recolte.getDateRecolte())){
+            throw new VenteException("La date de vente doit être supérieure à la date de récolte");
+        }
+
         if (totalVenteQuantite + venteDTO.getQuantite() > recolte.getQuantiteTotale()) {
             throw new VenteException("La quantité totale des ventes dépasse la quantité de la récolte");
         }
@@ -75,6 +79,10 @@ public class VenteServiceImpl  implements VenteService {
 
         Recolte recolte = recolteRepository.findById(venteDTO.getRecolteId())
                 .orElseThrow(() -> new RecolteException("Recolte non trouvée"));
+
+        if(venteDTO.getDate().isBefore(recolte.getDateRecolte())){
+            throw new VenteException("La date de vente doit être supérieure à la date de récolte");
+        }
 
 
         double totalVenteQuantite = venteRepository.findByRecolteId(venteDTO.getRecolteId())
